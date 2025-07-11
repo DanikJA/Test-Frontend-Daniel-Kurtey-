@@ -1,8 +1,14 @@
 import { useState } from "react";
-import "./App.css";
+import Gallery from "./Gallery";
+import "./Gallery.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  return (
+    <div>
+      <h1>Галерея</h1>
+      <Gallery />
+    </div>
+  );
 }
 
 export default App;
