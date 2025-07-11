@@ -1,0 +1,116 @@
+/* index.css */
+
+body {
+  font-family: sans-serif;
+  background: white;
+  margin: 35px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.flag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.flag-name {
+  margin: 22px 0 10px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.flag-name.first {
+  margin-top: 0;
+}
+
+.flag {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+/* --- Ukraine --- */
+.flag-ukraine {
+  background: linear-gradient(to bottom, #0057b8 50%, #ffd701 50%);
+}
+
+/* --- Japan --- */
+.flag-japan {
+  background: white;
+}
+.flag-japan::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110px;
+  height: 110px;
+  background: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* --- Iceland --- */
+.flag-iceland {
+  background: #003896;
+  position: relative;
+}
+
+.flag-iceland::before,
+.flag-iceland::after {
+  content: "";
+  position: absolute;
+  background: white;
+  z-index: 0;
+}
+.flag-iceland::before {
+  top: 0;
+  left: 31%;
+  width: 10%;
+  height: 100%;
+}
+.flag-iceland::after {
+  top: 45%;
+  left: 0;
+  width: 100%;
+  height: 15%;
+}
+.flag-iceland .cross.vertical {
+  position: absolute;
+  top: 0;
+  left: 33%;
+  width: 6%;
+  height: 100%;
+  background: red;
+  z-index: 1;
+}
+.flag-iceland .cross.horizontal {
+  position: absolute;
+  top: 48%;
+  left: 0;
+  width: 100%;
+  height: 9%;
+  background: red;
+  z-index: 1;
+}
+
+/* --- Czech --- */
+.flag-czech {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  background: linear-gradient(to bottom, white 50%, red 50%);
+}
+.flag-czech::before {
+  content: "";
+  position: absolute;
+  border-top: 100px solid transparent;
+  border-bottom: 100px solid transparent;
+  border-left: 150px solid blue;
+}
