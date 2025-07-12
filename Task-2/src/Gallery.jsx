@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Gallery.css";
 
 import img1 from "./assets/images/1.jpg";
@@ -31,17 +31,54 @@ export const images = [
 
 function Gallery() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imgList, setImgList] = useState([]);
+
+  // 🟡 Після першого рендеру — фільтруємо видалені картинки
+  useEffect(() => {
+    const deleted = JSON.parse(localStorage.getItem("deletedImages")) || [];
+    const filtered = images.filter((img) => !deleted.includes(img));
+    setImgList(filtered);
+  }, []);
+
+  //  При видаленні картинки — оновлюємо imgList та записуємо в localStorage
+  const deleteImg = (src) => {
+    setImgList((prev) => {
+      const updated = prev.filter((img) => img !== src);
+
+      const deleted = JSON.parse(localStorage.getItem("deletedImages")) || [];
+      if (!deleted.includes(src)) {
+        localStorage.setItem(
+          "deletedImages",
+          JSON.stringify([...deleted, src])
+        );
+      }
+
+      return updated;
+    });
+
+    if (selectedImage === src) {
+      setSelectedImage(null); // Закриваємо модалку, якщо видалене зображення — відкрите
+    }
+  };
 
   return (
     <>
       <div className="gallery">
-        {images.map((src, index) => (
-          <img
-            key={index}
-            src={src}
-            alt={`Image ${index + 1}`}
-            onClick={() => setSelectedImage(src)}
-          />
+        {imgList.map((src, index) => (
+          <div key={index} className="gallery-item">
+            <img
+              src={src}
+              alt={`Image ${index + 1}`}
+              onClick={() => setSelectedImage(src)}
+            />
+            <button
+              className="delete-btn"
+              onClick={() => deleteImg(src)}
+              title="Видалити"
+            >
+              ✖
+            </button>
+          </div>
         ))}
       </div>
 
@@ -50,7 +87,12 @@ function Gallery() {
           <div className="overlay" onClick={() => setSelectedImage(null)}></div>
           <div className="modal">
             <img src={selectedImage} alt="Full-size" />
-            <button onClick={() => setSelectedImage(null)}>✖</button>
+            <button
+              className="close-btn"
+              onClick={() => setSelectedImage(null)}
+            >
+              ✖
+            </button>
           </div>
         </>
       )}
