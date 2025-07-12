@@ -61,6 +61,11 @@ function Gallery() {
     }
   };
 
+  const restoreImages = () => {
+    localStorage.removeItem("deletedImages");
+    setImgList(images);
+  };
+
   return (
     <>
       <div className="gallery">
@@ -81,6 +86,12 @@ function Gallery() {
           </div>
         ))}
       </div>
+
+      {imgList.length < images.length && (
+        <button className="restore-btn" onClick={restoreImages}>
+          Відновити всі зображення
+        </button>
+      )}
 
       {selectedImage && (
         <>
