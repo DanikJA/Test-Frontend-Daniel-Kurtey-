@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import UniversityTable from "./components/UniversityTable";
 import "./App.css";
 
 function App() {
