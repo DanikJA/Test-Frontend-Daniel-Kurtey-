@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import Gallery from "./Gallery";
 import "./Gallery.css";
-import { images } from "./Gallery";
 import "./App.css";
 
 function App() {
   const [dateNow, setDateNow] = useState("");
+  const [ImageCount, setImageCount] = useState(0);
 
   useEffect(() => {
     const now = new Date();
@@ -20,11 +20,11 @@ function App() {
 
   return (
     <div>
-      <h1>Галерея</h1>
+      <h1 className="main-title">Галерея</h1>
       <div className="info-bar">
-        Кількість зображень:{images.length} | Станом на: {dateNow}
+        Кількість зображень:{ImageCount} | Станом на: {dateNow}
       </div>
-      <Gallery />
+      <Gallery onAmountChange={setImageCount} />
     </div>
   );
 }

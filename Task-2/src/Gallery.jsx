@@ -29,18 +29,25 @@ export const images = [
   img12,
 ];
 
-function Gallery() {
+function Gallery({ onAmountChange }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imgList, setImgList] = useState([]);
 
-  // 🟡 Після першого рендеру — фільтруємо видалені картинки
+  //pass the number of images from the child to the parent component
+  useEffect(() => {
+    if (onAmountChange) {
+      onAmountChange(imgList.length);
+    }
+  }, [imgList, onAmountChange]);
+
+  // 🟡After the first rendering - filter deleted images
   useEffect(() => {
     const deleted = JSON.parse(localStorage.getItem("deletedImages")) || [];
     const filtered = images.filter((img) => !deleted.includes(img));
     setImgList(filtered);
   }, []);
 
-  //  При видаленні картинки — оновлюємо imgList та записуємо в localStorage
+  //  When an image is deleted, we update the imgList and write it to localStorage
   const deleteImg = (src) => {
     setImgList((prev) => {
       const updated = prev.filter((img) => img !== src);
@@ -56,8 +63,9 @@ function Gallery() {
       return updated;
     });
 
+    // Close the modal window if the deleted image is open
     if (selectedImage === src) {
-      setSelectedImage(null); // Закриваємо модалку, якщо видалене зображення — відкрите
+      setSelectedImage(null);
     }
   };
 
